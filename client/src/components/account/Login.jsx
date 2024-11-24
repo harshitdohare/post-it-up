@@ -4,17 +4,45 @@
 // import { Component } from 'react';
 
  const imageURL = 'https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png';
- const Component = styled(Box)`
-    width: 400px;
-    margin: auto;
+
+//  const Component = styled(Box)`
+//  width: 400px;
+//  position: absolute;
+//  top: 50%;
+//  left: 50%;
+//  transform: translate(-50%, -50%);
+//  box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
+//  background-color: #FDF0D5;
+// `;
+
+const Component = styled(Box)`
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;  // Makes the borders curved
+  background-color: #FDF0D5;
 `;
+
 
 const Image = styled('img')({
     width: 100,
-    margin: 'auto',
     display: 'flex',
+    margin: 'auto',
     padding: '50px 0 0'
-})
+});
+
+const Wrapper = styled(Box)`
+    padding: 25px 35px;
+    display: flex;
+    flex: 1;
+    overflow: auto;
+    flex-direction: column;
+    & > div, & > button, & > p {
+        margin-top: 20px;
+    }
+`;
 
 const Text = styled(Typography)`
     color: #878787;
@@ -38,17 +66,6 @@ const SignupButton = styled(Button)`
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
 `;
 
-const Wrapper = styled(Box)`
-    padding: 25px 35px;
-    display: flex;
-    flex: 1;
-    overflow: auto;
-    flex-direction: column;
-    & > div, & > button, & > p {
-        margin-top: 20px;
-    }
-`;
-
 const loginInitialValues = {
     username: '',
     password: ''
@@ -68,6 +85,13 @@ const signupInitialValues = {
     const toggleSignup = () => {
         account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
     }
+    const onValueChange = (e) => {
+        setLogin({ ...login, [e.target.name]: e.target.value });
+    }
+
+    const onInputChange = (e) => {
+        setSignup({ ...signup, [e.target.name]: e.target.value });
+    }
     return (
         <Component>
         <Box>
@@ -75,8 +99,8 @@ const signupInitialValues = {
             {
                     account === 'login' ?
                         <Wrapper>
-                            <TextField variant="standard"  name='username' label='Enter Username' />
-                            <TextField variant="standard"  name='password' label='Enter Password' />
+                            <TextField variant="standard" value={login.username} onChange={(e) => onValueChange(e)} name='username' label='Enter Username' />
+                            <TextField variant="standard" value={login.password} onChange={(e) => onValueChange(e)} name='password' label='Enter Password' />
 
 
                             <LoginButton variant="contained">Login</LoginButton>
@@ -84,9 +108,9 @@ const signupInitialValues = {
                             <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
                         </Wrapper> :
                         <Wrapper>
-                            <TextField variant="standard" name='name' label='Enter Name' />
-                            <TextField variant="standard" name='username' label='Enter Username' />
-                            <TextField variant="standard" name='password' label='Enter Password' />
+                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='name' label='Enter Name' />
+                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='username' label='Enter Username' />
+                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
 
                             <SignupButton >Signup</SignupButton>
                             <Text style={{ textAlign: 'center' }}>OR</Text>
